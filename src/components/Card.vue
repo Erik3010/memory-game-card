@@ -1,15 +1,38 @@
 <template>
-  <div class="game-card is-flipped">
+  <div :class="cardClass" @click="flipCard">
     <div class="game-card-face front">
-      <img src="@/assets/images/type/award.png" alt="icon" />
+      <img :src="image" alt="icon" />
     </div>
     <div class="game-card-face back"></div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
   name: "Card",
+  props: ["card"],
+  emits: ["flip-card"],
+  setup(props, { emit }) {
+    const image = computed(() =>
+      require(`@/assets/images/type/${props.card.type}.png`)
+    );
+
+    const cardClass = computed(() => {
+      return ["game-card", { "is-flipped": props.card.selected }];
+    });
+
+    const flipCard = () => {
+      emit("flip-card", { ...props.card });
+    };
+
+    return {
+      image,
+      cardClass,
+      flipCard,
+    };
+  },
 };
 </script>
 
@@ -21,6 +44,7 @@ export default {
   transition: 0.3s all;
   cursor: pointer;
   transform-style: preserve-3d;
+  user-select: none;
   @at-root {
     .is-flipped {
       transform: rotateY(180deg);

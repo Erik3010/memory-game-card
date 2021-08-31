@@ -1,8 +1,15 @@
 <template>
   <div class="container">
-    <Header />
+    <Header :new-game="gameState.isNewGame" @start-game="startGame" />
     <div class="game-board">
-      <Card />
+      <transition-group name="game-card-animation">
+        <Card
+          v-for="card in board"
+          :key="`${card.type}-${card.variant}`"
+          :card="card"
+          @flip-card="flipCard"
+        />
+      </transition-group>
     </div>
   </div>
 </template>
@@ -11,11 +18,20 @@
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 
+import useBoard from "@/composable/useBoard";
+import useGame from "@/composable/useGame";
+
 export default {
   name: "Home",
   components: {
     Card,
     Header,
+  },
+  setup() {
+    const { board } = useBoard();
+    const { startGame, flipCard, gameState } = useGame(board);
+
+    return { board, flipCard, startGame, gameState };
   },
 };
 </script>
@@ -24,10 +40,14 @@ export default {
 @import "@/styles/_variables.scss";
 
 .game-board {
-  margin-top: 5.5rem;
+  margin-top: 4.5rem;
   display: grid;
   grid-template: repeat(4, 150px) / repeat(4, 110px);
   justify-content: center;
   gap: 18px;
+}
+
+.game-card-animation-move {
+  transition: all 1s;
 }
 </style>

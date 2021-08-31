@@ -1,14 +1,28 @@
 <template>
   <div class="game-header">
-    <h1 class="game-header-title">
-      Memory Game Card
-    </h1>
+    <div class="game-header-wrapper">
+      <h1 class="game-header-title">
+        Memory Game Card
+      </h1>
+    </div>
+    <button class="game-button" @click="startGame">
+      {{ newGame ? "Start" : "Restart" }} Game
+    </button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Header",
+  props: ["newGame"],
+  emits: ["start-game"],
+  setup(_, { emit }) {
+    const startGame = () => {
+      emit("start-game");
+    };
+
+    return { startGame };
+  },
 };
 </script>
 
@@ -29,6 +43,22 @@ export default {
     background-repeat: no-repeat;
     background-size: 100% 0.5rem;
     background-position: 0% 100%;
+  }
+}
+
+.game-button {
+  margin-top: 2rem;
+  background: $primary;
+  color: white;
+  padding: 0.875rem 1.5rem;
+  border: 2px solid $primary;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  transition: 0.3s;
+  &:hover {
+    background: $secondary;
+    border-color: $secondary;
   }
 }
 </style>
