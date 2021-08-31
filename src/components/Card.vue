@@ -24,7 +24,7 @@ export default {
     });
 
     const flipCard = () => {
-      emit("flip-card", { ...props.card });
+      emit("flip-card", props.card);
     };
 
     return {
