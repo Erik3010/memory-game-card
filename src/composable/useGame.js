@@ -49,8 +49,8 @@ export default (board) => {
 
     if (
       !currentCard ||
-      currentCard.selected ||
       !gameState.canFlipCard ||
+      currentCard.selected ||
       gameState.selectedCards.length >= 2
     )
       return;
