@@ -8,7 +8,9 @@
     <button class="game-button" @click="startGame">
       {{ newGame ? "Start" : "Restart" }} Game
     </button>
-    <div v-if="isWin" class="game-header-win">You Win!</div>
+    <transition name="is-win-animation">
+      <div v-if="isWin" class="game-header-win">You Win!</div>
+    </transition>
   </div>
 </template>
 
@@ -63,6 +65,17 @@ export default {
   &-win {
     margin-top: 1.85rem;
     text-align: center;
+  }
+  .is-win-animation {
+    &-enter-active,
+    &-leave-active {
+      transition: 0.5s;
+    }
+
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
   }
 }
 </style>
