@@ -8,13 +8,14 @@
     <button class="game-button" @click="startGame">
       {{ newGame ? "Start" : "Restart" }} Game
     </button>
+    <div v-if="isWin" class="game-header-win">You Win!</div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Header",
-  props: ["newGame"],
+  props: ["newGame", "isWin"],
   emits: ["start-game"],
   setup(_, { emit }) {
     const startGame = () => {
@@ -44,21 +45,24 @@ export default {
     background-size: 100% 0.5rem;
     background-position: 0% 100%;
   }
-}
-
-.game-button {
-  margin-top: 2rem;
-  background: $primary;
-  color: white;
-  padding: 0.875rem 1.5rem;
-  border: 2px solid $primary;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 0.875rem;
-  transition: 0.3s;
-  &:hover {
-    background: $secondary;
-    border-color: $secondary;
+  .game-button {
+    margin-top: 2rem;
+    background: $primary;
+    color: white;
+    padding: 0.875rem 1.5rem;
+    border: 2px solid $primary;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    transition: 0.3s;
+    &:hover {
+      background: $secondary;
+      border-color: $secondary;
+    }
+  }
+  &-win {
+    margin-top: 1.85rem;
+    text-align: center;
   }
 }
 </style>

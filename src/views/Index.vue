@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <Header :new-game="gameState.isNewGame" @start-game="startGame" />
+    <Header
+      :new-game="gameState.isNewGame"
+      @start-game="startGame"
+      :is-win="isWin"
+    />
     <div class="game-board">
       <transition-group name="game-card-animation">
         <Card
@@ -29,9 +33,15 @@ export default {
   },
   setup() {
     const { board } = useBoard();
-    const { startGame, flipCard, gameState } = useGame(board);
+    const { startGame, flipCard, gameState, isWin } = useGame(board);
 
-    return { board, flipCard, startGame, gameState };
+    return {
+      board,
+      flipCard,
+      startGame,
+      gameState,
+      isWin,
+    };
   },
 };
 </script>
@@ -40,7 +50,7 @@ export default {
 @import "@/styles/_variables.scss";
 
 .game-board {
-  margin-top: 4.5rem;
+  margin-top: 3.25rem;
   display: grid;
   grid-template: repeat(4, 150px) / repeat(4, 110px);
   justify-content: center;
